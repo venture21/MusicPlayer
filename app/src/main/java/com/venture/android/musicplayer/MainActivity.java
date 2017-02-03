@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,9 +68,8 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         Toast.makeText(this, "프로그램을 실행합니다.",Toast.LENGTH_SHORT).show();
 
-        DataLoader loader = new DataLoader(this);
-        loader.load();
-        ArrayList<Music > datas = loader.get();
+        // 3.1 데이터를 불러온다.
+        ArrayList<Music > datas = DataLoader.get(this);
 
         // 리사이클러뷰 세팅
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
