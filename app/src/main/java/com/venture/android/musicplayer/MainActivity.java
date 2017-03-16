@@ -9,12 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+    private final int REQ_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +26,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
-    private final int REQ_CODE = 100;
 
     // Runtime Permission 관련 부분은 안드로이드 6.0 마시멜로 버전 이후부터 사용 가능
     // 따라서 6.0 이전 버전들은 @TargetApi코드를 통해 컴파일을 하더라도 무시하는 것으로 처리된다.
@@ -50,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // 2. 권한체크 후 콜백 < 사용자가 확인후 시스템이 호출하는 함수
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -59,23 +55,23 @@ public class MainActivity extends AppCompatActivity {
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 init();
             } else {
-                Toast.makeText(this,"권한을 허용하지 않으시면 프로그램을 실행할 수 없습니다.",Toast.LENGTH_LONG).show();
+                Message.show("권한을 허용하지 않으시면 프로그램을 실행할 수 없습니다.",this);
                 finish();
             }
         }
     }
     // 데이터를 로드할 함수
     private void init() {
-        Toast.makeText(this, "프로그램을 실행합니다.",Toast.LENGTH_SHORT).show();
+        Message.show("프로그램을 실행합니다.",this);
+        listInit();
+    }
 
-        // 3.1 데이터를 불러온다.
-        ArrayList<Music > datas = DataLoader.get(this);
-
-        // 리사이클러뷰 세팅
+    private void listInit() {
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        MusicAdapter adapter = new MusicAdapter(datas, this);
+        MusicAdapter adapter = new MusicAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
 
 }

@@ -12,21 +12,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by parkheejin on 2017. 2. 1..
  */
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
-    ArrayList<Music> data;
+    List<Music> data;
     Context context;
     Intent intent = null;
 
-    public MusicAdapter(ArrayList<Music> data, Context context) {
-        this.data = data;
+    public MusicAdapter(Context context) {
+        this.data = DataLoader.get(context);
         this.context = context;
-        intent = new Intent(context, PlayerActivity.class);
+        this.intent = new Intent(context, PlayerActivity.class);
     }
 
     @Override
@@ -75,15 +75,17 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.Holder> {
             txtArtist = (TextView) itemView.findViewById(R.id.txtArtist);
             image     = (ImageView) itemView.findViewById(R.id.image);
             cardView  = (CardView) itemView.findViewById(R.id.cardView);
+            cardView.setOnClickListener(listener);
 
-            cardView.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View v) {
-                    intent.putExtra("position", position);
-                    context.startActivity(intent);
-                }
-            });
         }
+
+        private View.OnClickListener listener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                intent.putExtra("position", position);
+                context.startActivity(intent);
+            }
+        };
     }
 }

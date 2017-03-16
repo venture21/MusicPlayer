@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by parkheejin on 2017. 2. 2..
@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 public class PlayerAdapter extends PagerAdapter{
 
-    ArrayList<Music> data;
+    List<Music> data;
     Context context;
     LayoutInflater inflater;
 
-    public PlayerAdapter(ArrayList<Music> data, Context context) {
+    public PlayerAdapter(List<Music> data, Context context) {
         this.data = data;
         this.context = context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
